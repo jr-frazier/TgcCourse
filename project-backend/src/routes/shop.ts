@@ -1,8 +1,7 @@
-const path = require('path');
+import path from "path";
+import express from "express";
 
-const express = require('express');
-
-const shopController = require('../src/controllers/shop');
+const shopController = require('../controllers/shop');
 
 const router = express.Router();
 
