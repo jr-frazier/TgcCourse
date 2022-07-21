@@ -1,18 +1,26 @@
 "use strict";
-var fs = require('fs');
-var path = require('path');
-var p = path.join(path.dirname(process.mainModule.filename), 'data', 'products.json');
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var fs_1 = __importDefault(require("fs"));
+var path_1 = __importDefault(require("path"));
+var p = path_1.default.join(path_1.default.dirname('.'), 'data', 'products.json');
 var getProductsFromFile = function (cb) {
-    fs.readFile(p, function (err, fileContent) {
+    fs_1.default.readFile(p, function (err, fileContent) {
+        console.log("path", p);
         if (err) {
+            console.log(err);
             cb([]);
         }
         else {
-            cb(JSON.parse(fileContent));
+            // @ts-ignore
+            console.log("File contents", JSON.parse(fileContent));
+            cb(JSON.parse(fileContent.toString()));
         }
     });
 };
-module.exports = /** @class */ (function () {
+var Product = /** @class */ (function () {
     function Product(t) {
         this.title = t;
     }
@@ -20,7 +28,7 @@ module.exports = /** @class */ (function () {
         var _this = this;
         getProductsFromFile(function (products) {
             products.push(_this);
-            fs.writeFile(p, JSON.stringify(products), function (err) {
+            fs_1.default.writeFile(p, JSON.stringify(products), function (err) {
                 console.log(err);
             });
         });
@@ -30,3 +38,5 @@ module.exports = /** @class */ (function () {
     };
     return Product;
 }());
+exports.default = Product;
+;

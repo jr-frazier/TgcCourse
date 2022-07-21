@@ -2,23 +2,29 @@ import fs from 'fs'
 import path from 'path'
 
 const p = path.join(
-  path.dirname(__dirname),
+  path.dirname('.'),
   'data',
   'products.json'
 );
 
-const getProductsFromFile = cb => {
+const getProductsFromFile = (cb: (products: any) => void) => {
   fs.readFile(p, (err, fileContent) => {
+    console.log("path", p)
     if (err) {
+      console.log(err);
       cb([]);
     } else {
-      cb(JSON.parse(fileContent));
+      // @ts-ignore
+      console.log("File contents", JSON.parse(fileContent))
+      cb(JSON.parse(fileContent.toString()));
     }
   });
 };
 
-module.exports = class Product {
-  constructor(t) {
+export default class Product {
+  title: string;
+  
+  constructor(t: string) {
     this.title = t;
   }
 
@@ -31,7 +37,7 @@ module.exports = class Product {
     });
   }
 
-  static fetchAll(cb) {
+  static fetchAll(cb: (products: any) => void) {
     getProductsFromFile(cb);
   }
 };

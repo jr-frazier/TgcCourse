@@ -1,7 +1,11 @@
 "use strict";
-var Product = require('../models/product');
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var product_1 = __importDefault(require("../models/product"));
 exports.getProducts = function (req, res, next) {
-    Product.fetchAll(function (products) {
+    product_1.default.fetchAll(function (products) {
         res.send(products);
     });
 };

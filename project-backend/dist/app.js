@@ -16,4 +16,4 @@ app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(errorController.get404);
-app.listen(8080);
+app.listen(8081);
