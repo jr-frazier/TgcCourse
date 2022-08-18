@@ -1,1 +1,1 @@
-[{"title":"dffsa"},{"title":"Another"},{"title":"fasdfdas"},{"title":"Second Book"},{"title":"New Boo"},{"title":"LOTR"},{"title":"Harry Potter"},{"title":"adsf"},{"title":"test2"},{"title":"test3"},{"title":"test4"},{"title":"test5"}]
+[{"id":1000,"title":"dffsa","price":100,"description":"A book about dffsa"},{"title":"How to go fullStack","price":39.99,"description":"A book that shows you how to become a fullStack dev.","id":1001}]

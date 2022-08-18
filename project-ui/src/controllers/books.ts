@@ -2,6 +2,8 @@ import axios from 'axios';
 
 export type Book = {
     title: string;
+    price: number;
+    description: string;
 }
 
 export function getBooks(): Promise<Book[]> {
@@ -14,6 +16,7 @@ export function getBooks(): Promise<Book[]> {
 }
 
 export function addBooks(book: Book): Promise<Book> {
+
     return axios.post('http://localhost:8080/admin/add-product', book)
         .then(response => response.data)
         .catch(error => {

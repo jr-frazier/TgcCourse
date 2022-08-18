@@ -5,11 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const p = path_1.default.join(path_1.default.dirname(process.mainModule.filename), '..', 'data', 'products.json');
+const dataStoragePath = path_1.default.join(path_1.default.dirname('.'), 'data', 'products.json');
 //
 const getProductsFromFile = (cb) => {
-    console.log('getProductsFromFile', p);
-    fs_1.default.readFile(p, (err, fileContent) => {
+    console.log('getProductsFromFile', dataStoragePath);
+    fs_1.default.readFile(dataStoragePath, (err, fileContent) => {
         if (err) {
             cb([]);
         }
@@ -19,13 +19,18 @@ const getProductsFromFile = (cb) => {
     });
 };
 class Product {
-    constructor(t) {
-        this.title = t;
+    constructor(title, price, description) {
+        this.title = title;
+        this.price = price;
+        this.description = description;
     }
     save() {
         getProductsFromFile((products) => {
+            const id = products[products.length - 1].id + 1;
+            console.log("id", id);
+            this.id = id;
             products.push(this);
-            fs_1.default.writeFile(p, JSON.stringify(products), err => {
+            fs_1.default.writeFile(dataStoragePath, JSON.stringify(products), err => {
                 // tslint:disable-next-line:no-console
                 console.log(err);
             });
@@ -33,6 +38,12 @@ class Product {
     }
     static fetchAll(cb) {
         getProductsFromFile(cb);
+    }
+    static findById(id, cb) {
+        getProductsFromFile((products) => {
+            const product = products.find(product => product.id === id);
+            cb(product);
+        });
     }
 }
 exports.default = Product;
