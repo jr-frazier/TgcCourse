@@ -23,11 +23,11 @@ class Product {
         this.title = title;
         this.price = price;
         this.description = description;
+        this.quantity = 0;
     }
     save() {
         getProductsFromFile((products) => {
-            const id = products[products.length - 1].id + 1;
-            console.log("id", id);
+            const id = products.length === 0 ? 1000 : products[products.length - 1].id + 1;
             this.id = id;
             products.push(this);
             fs_1.default.writeFile(dataStoragePath, JSON.stringify(products), err => {

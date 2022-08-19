@@ -1,1 +1,1 @@
-[{"id":1000,"title":"dffsa","price":100,"description":"A book about dffsa"},{"title":"How to go fullStack","price":39.99,"description":"A book that shows you how to become a fullStack dev.","id":1001}]
+[{"title":"Harry Potter","price":29.99,"description":"A book about wizards.","quantity":0,"id":1000},{"title":"Harry Potter 2","price":25.99,"description":"A book about wizards when they are teens.","quantity":0,"id":1001},{"title":"Harry Potter 3","price":25.99,"description":"A book about wizards when they are older teens but still teens.","quantity":0,"id":1002}]

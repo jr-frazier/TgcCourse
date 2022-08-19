@@ -2,7 +2,7 @@
 
 import express from 'express'
 
-import { addToCart, getCart, getCheckout, getProducts, deleteItemFromCart, DeleteResponse } from '../controllers/shop'
+import { addToCart, getCart, getCheckout, getProducts, deleteItemFromCart, CustomResponse, updateProductQuantity } from '../controllers/shop'
 
 const router = express.Router();
 
@@ -13,6 +13,8 @@ router.get('/cart', getCart);
 router.post('/cart/add-product', addToCart);
 
 router.get('/checkout', getCheckout);
+
+router.put('/cart/update-product', updateProductQuantity as any);
 
 router.delete('/cart/delete-product', deleteItemFromCart as any);
 

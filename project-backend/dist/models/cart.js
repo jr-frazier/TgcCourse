@@ -18,16 +18,36 @@ const getCartFromFile = (cb) => {
         }
     });
 };
-class Cart extends product_1.default {
-    constructor(id, title, price, description) {
-        super(title, price, description);
-        this.id = id;
+class Cart {
+    static save(id) {
+        product_1.default.fetchAll((products) => {
+            const product = products.find((product) => product.id === id);
+            if (product) {
+                getCartFromFile((cart) => {
+                    const index = cart.findIndex((product) => product.id === id);
+                    if (index >= 0) {
+                        cart[index].quantity++;
+                    }
+                    else {
+                        product.quantity += 1;
+                        cart.push(product);
+                    }
+                    console.log("cart", index);
+                    fs_1.default.writeFile(p, JSON.stringify(cart), (err) => {
+                        console.log(err);
+                    });
+                });
+            }
+            else {
+                console.log("product does not exist");
+            }
+        });
     }
-    save() {
+    static updateQuantity(id, quantity) {
         getCartFromFile((products) => {
-            const productExists = products.find((product) => product.id === this.id);
-            if (!productExists) {
-                products.push(this);
+            const index = products.findIndex((product) => product.id === id);
+            if (index >= 0) {
+                products[index].quantity = quantity;
                 fs_1.default.writeFile(p, JSON.stringify(products), (err) => {
                     console.log(err);
                 });

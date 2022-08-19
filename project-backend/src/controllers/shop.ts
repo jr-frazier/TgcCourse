@@ -2,7 +2,7 @@ import Product from '../models/product'
 import Cart from '../models/cart'
 import { Response, NextFunction } from 'express';
 
-export interface DeleteResponse {
+export interface CustomResponse {
   send: (arg0: string) => void; 
   status: (arg0: number) => { (): any; new(): any; send: { (arg0: string): void; new(): any; }}
 }
@@ -19,21 +19,33 @@ export const getCart = (req: any, res: { send: (arg0: Product[]) => void; } , ne
   })
 };
 
-export const addToCart = (req: { body: Product}, res: { send: (arg0: string) => void; }) => {
-
-  if (req.body.title && req.body.price && req.body.description && req.body.id)  { 
-    const cart = new Cart(req.body.id, req.body.title, req.body.price, req.body.description);
-    cart.save();
+export const addToCart = (req: { query: {id: string}}, res: { send: (arg0: string) => void; }) => {
+ 
+  if (req.query.id !== undefined) { 
+    Cart.save(parseInt(req.query.id));
     res.send('Product added successfully');
   } else {
     res.send('Product not added');
   }
 }
 
-export const deleteItemFromCart = (req: { query: { id: string; }; }, res: DeleteResponse ) => {
-  console.log('params', req.query) 
+export const updateProductQuantity = (req: {body: {id: number, quantity: number}}, res: CustomResponse) => {
+  const { id } = req.body;
+
+  const quantity = req.body.quantity <= 0 ? 1 : req.body.quantity;
+
+  if (id && quantity) {
+    Cart.updateQuantity(id, quantity);
+    res.status(200).send('Product quantity updated successfully');
+  } else {
+    res.status(400).send('Product quantity not updated');
+  }
+}
+
+export const deleteItemFromCart = (req: { query: { id: string; }; }, res: CustomResponse ) => {
+  
   const itemRemoved = Cart.deleteItem(parseInt(req.query.id, 10));
-  console.log("IT REMOVED", itemRemoved)
+ 
   if (itemRemoved) {
     res.status(200).send('Item removed successfully');
   } else {
