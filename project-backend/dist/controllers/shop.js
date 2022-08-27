@@ -7,9 +7,9 @@ exports.getCheckout = exports.deleteItemFromCart = exports.updateProductQuantity
 const product_1 = __importDefault(require("../models/product"));
 const cart_1 = __importDefault(require("../models/cart"));
 const getProducts = (req, res, next) => {
-    product_1.default.fetchAll((products) => {
-        res.send(products);
-    });
+    product_1.default.fetchAll()
+        .then(([rows]) => res.send(rows))
+        .catch(err => console.log(err));
 };
 exports.getProducts = getProducts;
 const getCart = (req, res, next) => {
@@ -41,13 +41,7 @@ const updateProductQuantity = (req, res) => {
 };
 exports.updateProductQuantity = updateProductQuantity;
 const deleteItemFromCart = (req, res) => {
-    const itemRemoved = cart_1.default.deleteItem(parseInt(req.query.id, 10));
-    if (itemRemoved) {
-        res.status(200).send('Item removed successfully');
-    }
-    else {
-        res.status(500).send('Error removing item');
-    }
+    cart_1.default.deleteItem(parseInt(req.query.id, 10));
 };
 exports.deleteItemFromCart = deleteItemFromCart;
 const getCheckout = (req, res, next) => {

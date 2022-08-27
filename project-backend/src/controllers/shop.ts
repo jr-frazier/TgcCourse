@@ -8,9 +8,9 @@ export interface CustomResponse {
 }
 
 export const getProducts = (req: any, res: { send: (arg0: any) => void; }, next: any) => {
-  Product.fetchAll((products: Product[]) => {
-    res.send(products);
-  });
+  Product.fetchAll()
+  .then(([rows]) => res.send(rows))
+  .catch(err => console.log(err));
 };
 
 export const getCart = (req: any, res: { send: (arg0: Product[]) => void; } , next: any) => {
@@ -44,13 +44,7 @@ export const updateProductQuantity = (req: {body: {id: number, quantity: number}
 
 export const deleteItemFromCart = (req: { query: { id: string; }; }, res: CustomResponse ) => {
   
-  const itemRemoved = Cart.deleteItem(parseInt(req.query.id, 10));
- 
-  if (itemRemoved) {
-    res.status(200).send('Item removed successfully');
-  } else {
-    res.status(500).send('Error removing item');
-  }
+  Cart.deleteItem(parseInt(req.query.id, 10));
 }
 
 export const getCheckout = (req: any, res: { render: (arg0: string, arg1: { path: string; pageTitle: string; }) => void; }, next: any) => {

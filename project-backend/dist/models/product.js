@@ -1,51 +1,20 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
-const dataStoragePath = path_1.default.join(path_1.default.dirname('.'), 'data', 'products.json');
-//
-const getProductsFromFile = (cb) => {
-    console.log('getProductsFromFile', dataStoragePath);
-    fs_1.default.readFile(dataStoragePath, (err, fileContent) => {
-        if (err) {
-            cb([]);
-        }
-        else {
-            cb(JSON.parse(fileContent));
-        }
-    });
-};
+const database_1 = require("../util/database");
 class Product {
-    constructor(title, price, description) {
+    constructor(title, price, description, imageUrl) {
         this.title = title;
         this.price = price;
         this.description = description;
-        this.quantity = 0;
+        this.imageUrl = imageUrl;
     }
     save() {
-        getProductsFromFile((products) => {
-            const id = products.length === 0 ? 1000 : products[products.length - 1].id + 1;
-            this.id = id;
-            products.push(this);
-            fs_1.default.writeFile(dataStoragePath, JSON.stringify(products), err => {
-                // tslint:disable-next-line:no-console
-                console.log(err);
-            });
-        });
+        return database_1.db.execute("INSERT INTO products (title, price, imageUrl , description) VALUES (?, ?, ?, ?)", [this.title, this.price, this.imageUrl, this.description]);
     }
-    static fetchAll(cb) {
-        getProductsFromFile(cb);
+    static fetchAll() {
+        return database_1.db.execute("SELECT * FROM products");
     }
-    static findById(id, cb) {
-        getProductsFromFile((products) => {
-            const product = products.find(product => product.id === id);
-            cb(product);
-        });
-    }
+    static findById(id, cb) { }
 }
 exports.default = Product;
-;
 //# sourceMappingURL=product.js.map
