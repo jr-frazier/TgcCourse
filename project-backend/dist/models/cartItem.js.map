@@ -1,0 +1,1 @@
+{"version":3,"file":"cartItem.js","sourceRoot":"","sources":["../../src/models/cartItem.ts"],"names":[],"mappings":";;;AAAA,yCAAsC;AACtC,+CAA6C;AAUhC,QAAA,QAAQ,GAAG,oBAAS,CAAC,MAAM,CAAC,UAAU,EAAE;IACnD,EAAE,EAAE;QACF,IAAI,EAAE,qBAAS,CAAC,OAAO;QACvB,aAAa,EAAE,IAAI;QACnB,SAAS,EAAE,KAAK;QAChB,UAAU,EAAE,IAAI;KACjB;IACD,QAAQ,EAAE,qBAAS,CAAC,OAAO;CAC5B,CAAC,CAAA"}
