@@ -2,20 +2,22 @@
 
 import express from 'express'
 
-import { addToCart, getCart, getCheckout, getProducts, deleteItemFromCart, CustomResponse, updateProductQuantity } from '../controllers/shop'
+import { getProducts, getProductsById, getCart } from '../controllers/shop'
 
 const router = express.Router();
 
 router.get('/products', getProducts);
 
+router.get('/products/:id', getProductsById);
+
 router.get('/cart', getCart);
 
-router.post('/cart/add-product', addToCart);
+// router.post('/cart/add-product', addToCart);
 
-router.get('/checkout', getCheckout);
+// router.get('/checkout', getCheckout);
 
-router.put('/cart/update-product', updateProductQuantity as any);
+// router.put('/cart/update-product', updateProductQuantity);
 
-router.delete('/cart/delete-product', deleteItemFromCart as any);
+// router.delete('/cart/delete-product', deleteItemFromCart);
 
 module.exports = router;

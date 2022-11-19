@@ -1,10 +1,7 @@
-import mysql from 'mysql2';
+import { Sequelize } from 'sequelize'
+require('dotenv').config()
 
-export const db = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    database: 'node-complete',
-    password: '6fDSUsA8@FNDgKZFT4HKvMTd4$yUubhMs*t'
-}).promise();
+const password = process.env.DB_PASSWORD;
 
-// module.exports = pool.promise();
+// below 'root' is the username, 'password' is the password
+export const sequelize = new Sequelize('node-complete', 'root', password, {dialect: 'mysql', host: 'localhost'})

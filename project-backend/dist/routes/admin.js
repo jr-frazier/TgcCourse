@@ -10,5 +10,7 @@ const router = express_1.default.Router();
 router.get('/products', admin_1.getProducts);
 // /admin/add-product => POST
 router.post('/add-product', admin_1.postAddProduct);
+router.put('/edit-product', admin_1.editProduct);
+router.delete('/delete/:id', admin_1.removeProduct);
 module.exports = router;
 //# sourceMappingURL=admin.js.map
