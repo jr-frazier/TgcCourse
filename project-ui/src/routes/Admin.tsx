@@ -15,7 +15,7 @@ export default function Admin() {
   const [error , setError] = useState<string>('');
 
   const handleSubmit = () => {
-    console.log("submit");
+    
     if (book.price <= 0 || book.title === "" || book.description === "") {
       alert("Please enter a valid book");
     }

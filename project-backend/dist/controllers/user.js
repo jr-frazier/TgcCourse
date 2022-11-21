@@ -16,7 +16,6 @@ const addUser = (req, res) => {
     else {
         user_1.User.create(user)
             .then((user) => {
-            // @ts-ignore
             user.createCart();
             res.status(201).send(user);
         })

@@ -8,6 +8,15 @@ const getProducts = (req, res) => {
         .catch(err => res.status(401).send(err));
 };
 exports.getProducts = getProducts;
+// export const getProductsById = (req: any, res: Response, next: NextFunction) => {
+//   Product.findByPk(req.params.id)
+//   .then((result) => {
+//     res.status(200).send(result);
+//   })
+//   .catch(err => {
+//     res.status(401).send(err);
+//   });
+// }
 const getProductsById = (req, res, next) => {
     product_1.Product.findByPk(req.params.id)
         .then((result) => {
