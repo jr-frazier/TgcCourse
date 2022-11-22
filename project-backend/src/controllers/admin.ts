@@ -16,8 +16,8 @@ import { Request, Response } from "express";
 //     }
 //   };
 
+// Adds Product to the database
 export const postAddProduct = (req: Request, res: Response) => {
-  console.log(req.body);
   const product = Product.create({
     title: req.body.title,
     price: req.body.price,
@@ -34,6 +34,7 @@ export const postAddProduct = (req: Request, res: Response) => {
   });
 };
 
+// Gets all products from the database
 export const getProducts = ( req: Request, res: Response, next: any
 ) => {
     Product.findAll().then((result) => {
@@ -43,6 +44,7 @@ export const getProducts = ( req: Request, res: Response, next: any
     })
 }
 
+// Gets a single product from the database and edits it
 export const editProduct = (req: Request, res: Response) => {
   const productId = req.body.id
   const productBody: ProductType = {
@@ -68,6 +70,7 @@ export const editProduct = (req: Request, res: Response) => {
 
 }
 
+// Deletes a product from the database
 export const removeProduct = (req: Request, res: Response) => {
     const productId = req.params.id
 

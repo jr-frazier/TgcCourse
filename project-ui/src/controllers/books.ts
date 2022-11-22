@@ -4,6 +4,7 @@ export type Book = {
     title: string;
     price: number;
     description: string;
+    imageUrl: string;
 }
 
 export function getBooks(): Promise<Book[]> {
