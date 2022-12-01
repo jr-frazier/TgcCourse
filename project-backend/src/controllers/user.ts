@@ -1,21 +1,14 @@
-import { User } from '../models/user'
+import { User, UserType } from '../models/user'
 import { Request, Response, NextFunction } from 'express';
 import { Model } from 'sequelize';
 import { Cart } from '../models/cart';
 
-export type User = {
-    id?: string;
-    first_name: string;
-    last_name: string;
-    email: string;
-}
-
-interface UserModel extends Model<User> {
+interface UserModel extends Model<UserType> {
     createCart: () => Promise<typeof Cart>;
 }
 
 export const addUser = (req: Request, res: Response) => {
-    const user: User = req.body
+    const user: UserType = req.body
 
    
     if (!user.first_name) {

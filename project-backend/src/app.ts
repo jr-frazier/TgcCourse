@@ -5,7 +5,7 @@ import cors from 'cors';
 import {get404} from './controllers/error'
 import { sequelize } from './util/database';
 import { Product } from './models/product'
-import { User } from './models/user';
+import { User, UserType } from './models/user';
 import { Cart } from './models/cart';
 import { CartItem } from './models/cartItem';
 
@@ -28,6 +28,17 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Retreives User
+app.use((req, res, next) => {
+    User.findByPk(1)
+    .then((user) => {
+        // @ts-ignore
+        req.user = user;
+        next();
+    })
+    .catch(err => console.log(err))
+})
+
 app.use('/admin', adminRoutes);
 app.use('/user', userRoutes), 
 app.use(shopRoutes);
@@ -44,10 +55,24 @@ Product.belongsToMany(Cart, {through: CartItem})
 
 
 // use {force: true} to force and update to your tables in the database
-sequelize.sync().then((result) => {
+sequelize.sync()
+.then(() => {
+    return User.findByPk(1)
+})
+.then((user) => {
+    const newUser: UserType = {first_name: 'JR', last_name: 'Frazier', email: 'jrfrazier@gmail.com'}
+
+    if (!user) {
+        return User.create(newUser)
+    }
+
+    return user
+})
+.then((result) => {
     console.log("connected to the database");
     app.listen(8080);
 })
+
 .catch((err) => {
     console.log(err)    
 })

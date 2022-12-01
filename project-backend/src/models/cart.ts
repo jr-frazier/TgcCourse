@@ -1,13 +1,11 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../util/database';
-import { Product } from './product';
+import { ProductType } from './product';
 
 export type CartType = {
   id: number;
-  title: string;
-  price: number;
-  description: string;
-  imageUrl: string;
+  userId: number;
+  cartItems: ProductType[];
 }
 
 export const Cart = sequelize.define('cart', {

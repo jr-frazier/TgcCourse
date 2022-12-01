@@ -39,7 +39,18 @@ cart_1.Cart.belongsTo(user_1.User);
 cart_1.Cart.hasMany(cartItem_1.CartItem);
 product_1.Product.belongsToMany(cart_1.Cart, { through: cartItem_1.CartItem });
 // use {force: true} to force and update to your tables in the database
-database_1.sequelize.sync().then((result) => {
+database_1.sequelize.sync()
+    .then(() => {
+    return user_1.User.findByPk(1);
+})
+    .then((user) => {
+    const newUser = { first_name: 'JR', last_name: 'Frazier', email: 'jrfrazier@gmail.com' };
+    if (!user) {
+        return user_1.User.create(newUser);
+    }
+    return user;
+})
+    .then((result) => {
     console.log("connected to the database");
     app.listen(8080);
 })

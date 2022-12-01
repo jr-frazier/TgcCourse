@@ -15,8 +15,8 @@ const product_1 = require("../models/product");
 //       return true;
 //     }
 //   };
+// Adds Product to the database
 const postAddProduct = (req, res) => {
-    console.log(req.body);
     const product = product_1.Product.create({
         title: req.body.title,
         price: req.body.price,
@@ -32,6 +32,7 @@ const postAddProduct = (req, res) => {
     });
 };
 exports.postAddProduct = postAddProduct;
+// Gets all products from the database
 const getProducts = (req, res, next) => {
     product_1.Product.findAll().then((result) => {
         res.status(200).send(result);
@@ -40,6 +41,7 @@ const getProducts = (req, res, next) => {
     });
 };
 exports.getProducts = getProducts;
+// Gets a single product from the database and edits it
 const editProduct = (req, res) => {
     const productId = req.body.id;
     const productBody = {
@@ -65,6 +67,7 @@ const editProduct = (req, res) => {
     }
 };
 exports.editProduct = editProduct;
+// Deletes a product from the database
 const removeProduct = (req, res) => {
     const productId = req.params.id;
     product_1.Product.findByPk(productId)

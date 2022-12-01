@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '../util/database';
 
 export type CartItemType = {
-  id: number;
+  id?: number;
   title: string;
   price: number;
   description: string;
