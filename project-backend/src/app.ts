@@ -49,7 +49,8 @@ app.use(get404);
 // Product.belongsTo(User, {constraints: true, onDelete: 'CASCADE' });
 // User.has(Product)
 User.hasOne(Cart)
-Cart.belongsTo(User);
+Cart.belongsTo(User)
+Cart.hasOne(User)
 Cart.hasMany(CartItem)
 Product.belongsToMany(Cart, {through: CartItem})
 
@@ -57,7 +58,7 @@ Product.belongsToMany(Cart, {through: CartItem})
 // use {force: true} to force and update to your tables in the database
 sequelize.sync()
 .then(() => {
-    return User.findByPk(1)
+    return User.findByPk(11)
 })
 .then((user) => {
     const newUser: UserType = {first_name: 'JR', last_name: 'Frazier', email: 'jrfrazier@gmail.com'}
@@ -67,6 +68,16 @@ sequelize.sync()
     }
 
     return user
+})
+.then((user: any) =>  {
+    if (user.cartId === null) {
+        return user.createCart()
+    }
+})
+.then((cart) => {
+    if (cart) {
+        User.update({cartId: cart.id}, {where: {id: cart.userId}})
+    }
 })
 .then((result) => {
     console.log("connected to the database");

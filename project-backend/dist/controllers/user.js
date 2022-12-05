@@ -16,7 +16,7 @@ const addUser = (req, res) => {
     else {
         user_1.User.create(user)
             .then((user) => {
-            user.createCart();
+            // user.createCart()
             res.status(201).send(user);
         })
             .catch((err) => console.log(err));

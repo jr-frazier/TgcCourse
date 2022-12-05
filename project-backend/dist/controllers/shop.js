@@ -28,7 +28,14 @@ const getProductsById = (req, res, next) => {
 };
 exports.getProductsById = getProductsById;
 const getCart = (req, res) => {
-    res.send(req.user.cart.getProducts());
+    req.user.getCart()
+        .then(((cart) => {
+        return cart.getProducts()
+            .then((products) => {
+            res.status(200).send(products);
+        });
+    }))
+        .catch((err) => res.status(401).send(err));
 };
 exports.getCart = getCart;
 // export const addToCart = (req: AddToCartRequest, res: Response) => {

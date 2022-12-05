@@ -6,6 +6,7 @@ export type UserType = {
     first_name: string;
     last_name: string;
     email: string;
+    cartId?: number;
 }
 
 export const User = sequelize.define('user', {

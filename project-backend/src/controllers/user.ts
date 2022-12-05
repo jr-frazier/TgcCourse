@@ -20,7 +20,7 @@ export const addUser = (req: Request, res: Response) => {
     } else {
         User.create(user)
         .then((user: UserModel) => {
-            user.createCart()
+            // user.createCart()
             res.status(201).send(user)
         })
         .catch((err) => console.log(err))

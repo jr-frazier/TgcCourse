@@ -7,6 +7,7 @@ export type CartItemType = {
   price: number;
   description: string;
   imageUrl: string;
+  quantity: number;
 }
 
 export const CartItem = sequelize.define('cartItem', {

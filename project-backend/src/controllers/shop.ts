@@ -1,5 +1,5 @@
 import { Product } from '../models/product'
-// import Cart from '../models/cart'
+import { CartType, Cart } from '../models/cart'
 import { Request, Response, NextFunction } from 'express';
 
 
@@ -32,8 +32,17 @@ export const getProductsById = (req: any, res: Response, next: NextFunction) => 
     res.status(401).send(err);
   });
 }
+
+
 export const getCart = (req: any, res: Response) => {
-  res.send(req.user.cart.getProducts());
+  req.user.getCart()
+  .then(((cart: any) => {
+    return cart.getProducts()
+    .then((products: any) => {
+      res.status(200).send(products)
+    })
+  }))
+  .catch((err: any) => res.status(401).send(err));
 };
 
 // export const addToCart = (req: AddToCartRequest, res: Response) => {

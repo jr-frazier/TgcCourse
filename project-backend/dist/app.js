@@ -27,6 +27,16 @@ const userRoutes = require('./routes/user');
 const shopRoutes = require('./routes/shop');
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
+// Retreives User
+app.use((req, res, next) => {
+    user_1.User.findByPk(1)
+        .then((user) => {
+        // @ts-ignore
+        req.user = user;
+        next();
+    })
+        .catch(err => console.log(err));
+});
 app.use('/admin', adminRoutes);
 app.use('/user', userRoutes),
     app.use(shopRoutes);
@@ -36,12 +46,13 @@ app.use(error_1.get404);
 // User.has(Product)
 user_1.User.hasOne(cart_1.Cart);
 cart_1.Cart.belongsTo(user_1.User);
+cart_1.Cart.hasOne(user_1.User);
 cart_1.Cart.hasMany(cartItem_1.CartItem);
 product_1.Product.belongsToMany(cart_1.Cart, { through: cartItem_1.CartItem });
 // use {force: true} to force and update to your tables in the database
 database_1.sequelize.sync()
     .then(() => {
-    return user_1.User.findByPk(1);
+    return user_1.User.findByPk(11);
 })
     .then((user) => {
     const newUser = { first_name: 'JR', last_name: 'Frazier', email: 'jrfrazier@gmail.com' };
@@ -49,6 +60,16 @@ database_1.sequelize.sync()
         return user_1.User.create(newUser);
     }
     return user;
+})
+    .then((user) => {
+    if (user.cartId === null) {
+        return user.createCart();
+    }
+})
+    .then((cart) => {
+    if (cart) {
+        user_1.User.update({ cartId: cart.id }, { where: { id: cart.userId } });
+    }
 })
     .then((result) => {
     console.log("connected to the database");
