@@ -4,7 +4,10 @@ import { Request, Response, NextFunction } from 'express';
 
 
 interface AddToCartRequest extends Request {
-  query: {id: string}
+  body: {
+    productId: string,
+    cartId: string
+  }
 }
 
 export const getProducts = (req: any, res: Response) => {
@@ -35,25 +38,28 @@ export const getProductsById = (req: any, res: Response, next: NextFunction) => 
 
 
 export const getCart = (req: any, res: Response) => {
-  req.user.getCart()
-  .then(((cart: any) => {
-    return cart.getProducts()
-    .then((products: any) => {
-      res.status(200).send(products)
-    })
-  }))
-  .catch((err: any) => res.status(401).send(err));
+  console.log("User", req.user)
+  // req.user.getCart()
+  // .then(((cart: any) => {
+  //   return cart.getProducts()
+  //   .then((products: any) => {
+  //     res.status(200).send(products)
+  //   })
+  // }))
+  // .catch((err: any) => res.status(401).send(err));
 };
 
-// export const addToCart = (req: AddToCartRequest, res: Response) => {
- 
-//   if (req.query.id !== undefined) { 
-//     Cart.save(parseInt(req.query.id));
-//     res.send('Product added successfully');
-//   } else {
-//     res.send('Product not added');
-//   }
-// }
+// 
+export const addToCart = (req: any, res: Response) => {
+  console.log(req.user)
+  // Cart.findByPk(req.body.cartId)
+  // .then((cart: any) => {
+  //   cart.addProduct(req.body.productId, {through: {quantity: 1}})
+  // })
+  // .catch((err: any) => res.status(401).send(err));
+
+  
+}
 
 // export const updateProductQuantity = (req: {body: {id: number, quantity: number}}, res: Response) => {
 //   const { id } = req.body;

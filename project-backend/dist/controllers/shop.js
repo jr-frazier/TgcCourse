@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCart = exports.getProductsById = exports.getProducts = void 0;
+exports.addToCart = exports.getCart = exports.getProductsById = exports.getProducts = void 0;
 const product_1 = require("../models/product");
 const getProducts = (req, res) => {
     product_1.Product.findAll()
@@ -28,24 +28,27 @@ const getProductsById = (req, res, next) => {
 };
 exports.getProductsById = getProductsById;
 const getCart = (req, res) => {
-    req.user.getCart()
-        .then(((cart) => {
-        return cart.getProducts()
-            .then((products) => {
-            res.status(200).send(products);
-        });
-    }))
-        .catch((err) => res.status(401).send(err));
+    console.log("User", req.user);
+    // req.user.getCart()
+    // .then(((cart: any) => {
+    //   return cart.getProducts()
+    //   .then((products: any) => {
+    //     res.status(200).send(products)
+    //   })
+    // }))
+    // .catch((err: any) => res.status(401).send(err));
 };
 exports.getCart = getCart;
-// export const addToCart = (req: AddToCartRequest, res: Response) => {
-//   if (req.query.id !== undefined) { 
-//     Cart.save(parseInt(req.query.id));
-//     res.send('Product added successfully');
-//   } else {
-//     res.send('Product not added');
-//   }
-// }
+// 
+const addToCart = (req, res) => {
+    console.log(req.user);
+    // Cart.findByPk(req.body.cartId)
+    // .then((cart: any) => {
+    //   cart.addProduct(req.body.productId, {through: {quantity: 1}})
+    // })
+    // .catch((err: any) => res.status(401).send(err));
+};
+exports.addToCart = addToCart;
 // export const updateProductQuantity = (req: {body: {id: number, quantity: number}}, res: Response) => {
 //   const { id } = req.body;
 //   const quantity = req.body.quantity <= 0 ? 1 : req.body.quantity;
